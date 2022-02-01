@@ -1,0 +1,65 @@
+		--->>> Explanations <<<---
+		
+1-a: Code
+	List<Integer> ints = new ArrayList<>();
+	ints.add(1);
+	ints.add(2);
+	List<Number> nums = ints;
+	nums.add(3.14);
+	
+	---->>> This code will result in "Compile time error"
+			Because of Type of mismatch
+			even though Class Integer technically extends Number
+			that relation is not reflected in Generics.
+			
+			like how List<Object> exList = new ArrayList<>();
+			would give us runtime errors if casted the wrong way.
+			
+			if the compiler allowed this sort of behaviour, 
+			
+			This specific problem is called "Covariance"
+			if java is to allow the assignment of "ints" to nums by
+			referrence, This would present a variety of problems.
+				
+			Problem 1. nums could add any type of number to originally 
+			Integer typed list. 
+			ints could end up looking something like this.
+			
+			ints = {1, 2, 3, 4, 0.234, 23.234}
+			Which breaks our contract with the language that int array 
+			would only contain array of ints.
+			
+			> Thus the denial of the very assignment.
+			But the error is localized to the assignment of Integer list
+			to Number array.
+			
+			:: Thus the "type mis-match" compiler error:: rightly so.
+	
+1-b: Code
+	List<Integer> ints = new ArrayList<>();
+	ints.add(1);
+	ints.add(2);
+	List<? extends Number> nums = ints;
+	nums.add(3.14);
+	
+	---->>> The code is a little un-intuitive but here is my crack at it.
+			
+			I will start answering this by first explaining the following section
+			
+			List<? extends Number> nums = ints;
+			
+			There is a lot going in here.
+			
+			when we assign ints to the nums, The compile "infers type" and converts
+			the generic type of nums to Integer.
+			
+			Since Integer extends Number is what it is being assined to, it is 
+			implicitly inferred from the assignment that nums is an Integer array.
+			
+			>> Then nums.add(3.14) would essentially mean >>> nums.add(double);
+			which the compiler rejects outright. rightfully so.
+			
+	
+	
+	
+	
