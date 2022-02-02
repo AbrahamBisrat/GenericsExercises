@@ -6,19 +6,24 @@ import java.util.List;
 public class SecondSmallestGeneric {
 	public static void main(String[] args) {
 		List<Integer> numbers = new ArrayList<>() {
-			{
-				add(0);
-				add(1);
-				add(1);
+			{	
 				add(3);
 				add(5);
 				add(43);
 				add(234);
+				add(0);
+				add(1);
+				add(1);
 			}
 		};
 		System.out.println(secondBiggest(numbers));
 		
 		System.out.println(secondSmallest(numbers));
+		
+		System.out.println(SmallestGeneric(numbers));
+		
+		System.out.println(secondSmallestGen(numbers));
+		
 		
 	}
 	
@@ -50,5 +55,38 @@ public class SecondSmallestGeneric {
 		}
 		return secondSmallest;
 	}
-
+	
+	public static <T extends Comparable<T>> T SmallestGeneric(List< T> list) {
+		T smallest = list.get(0);
+		for(T each : list) {
+			if(each.compareTo(smallest) < 0) {
+				smallest = each;
+			}
+		}
+		
+		return smallest;
+	}
+	
+	public static <T extends Comparable<T>> T secondSmallestGen
+					(List<T> list) {
+		T smallest = null;
+		T secondSmallest = null;
+		for(T each : list) {
+			if(smallest == null) {
+				smallest = each;		// Buggy!!!
+				secondSmallest = each;
+			}
+			if(each.compareTo(smallest) < 0) {
+				secondSmallest = smallest;
+				smallest = each;
+			}else if(secondSmallest != null 
+					&& each.compareTo(secondSmallest) < 0) {
+				secondSmallest = each;
+			}
+		}
+		
+		if(secondSmallest != null)
+			return secondSmallest;
+		return null;
+	}
 }
