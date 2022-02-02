@@ -12,6 +12,7 @@ public class Tester {
 		
 		questionB();
 		
+		
 	}
 
 	private static void questionA() {
