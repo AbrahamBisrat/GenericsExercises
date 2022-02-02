@@ -15,8 +15,7 @@ public class Group<T> {
 	public List<T> getElements() {
 		return elements;
 	}
-	@Override
-	public String toString() {
+	@Override public String toString() {
 		return "[special : " + specialElement.toString() 
 		    + ", elements :\n   " + elements.toString() + "]";
 	}
