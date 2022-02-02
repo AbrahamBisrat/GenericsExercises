@@ -2,6 +2,7 @@ package labs.prob5;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SecondSmallestGeneric {
 	public static void main(String[] args) {
@@ -16,14 +17,14 @@ public class SecondSmallestGeneric {
 				add(1);
 			}
 		};
+		
 		System.out.println(secondBiggest(numbers));
 		
 		System.out.println(secondSmallest(numbers));
 		
-		System.out.println(SmallestGeneric(numbers));
+		System.out.println(smallestGeneric(numbers));
 		
 		System.out.println(secondSmallestGen(numbers));
-		
 		
 	}
 	
@@ -56,37 +57,22 @@ public class SecondSmallestGeneric {
 		return secondSmallest;
 	}
 	
-	public static <T extends Comparable<T>> T SmallestGeneric(List< T> list) {
+	public static <T extends Comparable<T>> T smallestGeneric(List< T> list) {
 		T smallest = list.get(0);
 		for(T each : list) {
 			if(each.compareTo(smallest) < 0) {
 				smallest = each;
 			}
 		}
-		
 		return smallest;
 	}
 	
-	public static <T extends Comparable<T>> T secondSmallestGen
-					(List<T> list) {
-		T smallest = null;
-		T secondSmallest = null;
-		for(T each : list) {
-			if(smallest == null) {
-				smallest = each;		// Buggy!!!
-				secondSmallest = each;
-			}
-			if(each.compareTo(smallest) < 0) {
-				secondSmallest = smallest;
-				smallest = each;
-			}else if(secondSmallest != null 
-					&& each.compareTo(secondSmallest) < 0) {
-				secondSmallest = each;
-			}
-		}
-		
-		if(secondSmallest != null)
-			return secondSmallest;
-		return null;
+	public static <T extends Comparable<T>> T secondSmallestGen(List<T> list) {
+		return list.stream()
+				   .distinct()
+				   .sorted()
+				   .limit(2)
+				   .collect(Collectors.toList())
+				   .get(1);
 	}
 }
